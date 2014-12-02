@@ -1,11 +1,35 @@
 'use strict';
 
 module.exports = function(grunt) {
+  var srcFiles = [
+    '**/*.js',
+    '!node_modules/**/*',
+    '!bower_components/**/*',
+    '!build/**/*',
+    '!app/js/require.js'
+  ];
+
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-jscs');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-browserify');
 
   grunt.initConfig({
+    jshint: {
+      files: srcFiles,
+      options: {
+        jshintrc: true
+      }
+    },
+
+    jscs: {
+      src: srcFiles,
+      options: {
+        preset: 'google'
+      }
+    },
+
     clean: {
       dev: {
         src: ['build/']
@@ -15,29 +39,19 @@ module.exports = function(grunt) {
     copy: {
       dev: {
         cwd: 'app/',
-        src: ['**/*.html', 'css/**/*.css' ],
+        src: ['**/*.html', 'js/**/*.js'],
         expand: true,
         dest: 'build/'
-      }
-    },
-
-    browserify: {
-      dev: {
-        src: ['app/js/**/*.js'],
-        dest: 'build/bundle.js',
-        options: {
-          transform: ['debowerify']
-        }
       },
 
-      test: {
-        src: ['test/client/**/*test.js'],
-        dest:'test/test_bundle.js',
-        options:{
-          transform: ['debowerify']
-        }
+      jquery: {
+        cwd: 'bower_components/jquery/dist/',
+        src: ['jquery.js'],
+        expand: true,
+        dest: 'build/js/'
       }
-    }
+    },
   });
-  grunt.registerTask('build:dev', ['clean:dev', 'browserify:dev', 'copy:dev'])
+
+  grunt.registerTask('default', ['jshint', 'jscs', 'clean', 'copy']);
 };

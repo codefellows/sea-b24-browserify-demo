@@ -1,5 +1,12 @@
 'use strict';
 
-var $ = require('jquery');
+require.config({
+  paths: {
+    jquery: 'jquery'
+  }
+});
 
-$('#app').append('<p>Hello from javascript!</p>');
+requirejs(['jquery'],
+function($) {
+  $('#app').append('<p>Hello from javascript!</p>');
+});

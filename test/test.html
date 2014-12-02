@@ -12,9 +12,6 @@
   <script>
     mocha.setup('bdd');
   </script>
-  <script src="test_bundle.js"></script>
-  <script>
-    mocha.run();
-  </script>
+  <script data-main="client/some_test.js" src="../app/js/require.js"></script>
 </body>
 </html>
