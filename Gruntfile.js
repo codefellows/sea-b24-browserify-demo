@@ -39,5 +39,5 @@ module.exports = function(grunt) {
       }
     }
   });
-  grunt.registerTask('build:dev', ['clean:dev', 'browserify:dev', 'copy:dev'])
+  grunt.registerTask('default', ['clean:dev', 'browserify', 'copy:dev'])
 };
