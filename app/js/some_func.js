@@ -1,3 +1,7 @@
-module.exports = function() {
-  return true;
-};
+'use strict';
+
+define(function() {
+  return function() {
+    return true;
+  };
+});
